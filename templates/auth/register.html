@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+        <div>
+            <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                Create your account
+            </h2>
+            <p class="mt-2 text-center text-sm text-gray-600">
+                Or
+                <a href="{{ url_for('auth.login') }}" class="font-medium text-[#0A7075] hover:text-[#0C969C]">
+                    sign in if you already have an account
+                </a>
+            </p>
+        </div>
+        <form class="mt-8 space-y-6" method="POST" action="">
+            {{ form.hidden_tag() }}
+            <div class="rounded-md shadow-sm -space-y-px">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        {{ form.first_name.label(class="sr-only") }}
+                        {{ form.first_name(class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-[#0A7075] focus:border-[#0A7075] focus:z-10 sm:text-sm", placeholder="First Name") }}
+                        {% if form.first_name.errors %}
+                            {% for error in form.first_name.errors %}
+                                <p class="text-red-500 text-xs mt-1">{{ error }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div>
+                        {{ form.last_name.label(class="sr-only") }}
+                        {{ form.last_name(class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-[#0A7075] focus:border-[#0A7075] focus:z-10 sm:text-sm", placeholder="Last Name") }}
+                        {% if form.last_name.errors %}
+                            {% for error in form.last_name.errors %}
+                                <p class="text-red-500 text-xs mt-1">{{ error }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="mt-4">
+                    {{ form.email.label(class="sr-only") }}
+                    {{ form.email(class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-[#0A7075] focus:border-[#0A7075] focus:z-10 sm:text-sm", placeholder="Email address") }}
+                    {% if form.email.errors %}
+                        {% for error in form.email.errors %}
+                            <p class="text-red-500 text-xs mt-1">{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="mt-4">
+                    {{ form.password.label(class="sr-only") }}
+                    {{ form.password(class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-[#0A7075] focus:border-[#0A7075] focus:z-10 sm:text-sm", placeholder="Password") }}
+                    {% if form.password.errors %}
+                        {% for error in form.password.errors %}
+                            <p class="text-red-500 text-xs mt-1">{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="mt-4">
+                    {{ form.confirm_password.label(class="sr-only") }}
+                    {{ form.confirm_password(class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-[#0A7075] focus:border-[#0A7075] focus:z-10 sm:text-sm", placeholder="Confirm password") }}
+                    {% if form.confirm_password.errors %}
+                        {% for error in form.confirm_password.errors %}
+                            <p class="text-red-500 text-xs mt-1">{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+
+            <div>
+                {{ form.submit(class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#0A7075] hover:bg-[#0C969C] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0A7075]") }}
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
