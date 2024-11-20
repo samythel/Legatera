@@ -1,6 +1,5 @@
-# apprunner.yaml
 version: 1.0
-runtime: python3.9
+runtime: python3.10
 build:
   commands:
     build:
@@ -9,9 +8,9 @@ build:
       - pip install .
 
 run:
-  command: gunicorn --workers=3 --timeout=120 --bind=0.0.0.0:5000 --access-logfile=- --error-logfile=- src.legatera.wsgi:app
+  command: gunicorn --workers=3 --timeout=120 --bind=0.0.0.0:8080 --access-logfile=- --error-logfile=- src.legatera.wsgi:app
   network:
-    port: 5000
+    port: 8080
   env:
     - name: FLASK_APP
       value: src.legatera.wsgi
