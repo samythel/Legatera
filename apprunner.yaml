@@ -1,32 +1,9 @@
 version: 1.0
-runtime: python3
+runtime: python3 
 build:
   commands:
-    pre-build:
-      - python -m pip install --upgrade pip
-      - pip install pipenv
     build:
-      - pip install -r requirements.txt
-      - pip install .
-    post-build:
-      - python -m pytest tests/
-  env:
-    - name: PYTHONPATH
-      value: src
-    - name: FLASK_APP
-      value: src.legatera.wsgi
-    - name: FLASK_ENV
-      value: production
-
-run:
-  runtime-version: 3.11
-  command: gunicorn --workers=4 --threads=2 --timeout=120 --bind=0.0.0.0:8080 --access-logfile=- --error-logfile=- src.legatera.wsgi:app
-  network:
-    port: 8080
-  env:
-    - name: FLASK_APP
-      value: src.legatera.wsgi
-    - name: FLASK_ENV
-      value: production
-    - name: PYTHONPATH
-      value: src
+      - pip install pipenv
+      - pipenv install 
+run: 
+  command: python app.py
