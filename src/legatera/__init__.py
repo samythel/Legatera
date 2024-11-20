@@ -6,10 +6,6 @@ import boto3
 from botocore.exceptions import ClientError
 import os
 
-# Initialize Flask extensions
-login_manager = LoginManager()
-mail = Mail()
-
 def init_aws_clients():
     """Initialize AWS clients with error handling"""
     try:
@@ -38,12 +34,18 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    # Initialize Flask extensions
+    # Initialize Flask extensions within app context
+    login_manager = LoginManager()
     login_manager.init_app(app)
-    mail.init_app(app)
-
     login_manager.login_view = 'auth.login'
     login_manager.login_message_category = 'info'
+
+    mail = Mail()
+    mail.init_app(app)
+
+    # Store extensions on app for access in views
+    app.login_manager = login_manager
+    app.mail = mail
 
     # Initialize AWS services
     app.cognito_client, app.dynamodb, app.s3_client = init_aws_clients()
