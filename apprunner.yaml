@@ -1,5 +1,5 @@
 version: 1.0
-runtime: python3
+runtime: python311
 build:
   commands:
     pre-build:
@@ -13,7 +13,7 @@ build:
       value: "production"
 
 run:
-  runtime-version: 3.11
+  runtime-version: 3.11.10
   command: python -m gunicorn --bind 0.0.0.0:8080 --workers 4 --timeout 0 "app:app"
   network:
     port: 8080
