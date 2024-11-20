@@ -10,7 +10,7 @@ build:
       - pip install .
 
 run:
-  command: python src/legatera/wsgi.py
+  command: gunicorn --workers=3 --timeout=120 --bind=0.0.0.0:5000 --access-logfile=- --error-logfile=- src.legatera.wsgi:app
   network:
     port: 5000
   env:
