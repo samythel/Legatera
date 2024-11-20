@@ -1,12 +1,15 @@
+# apprunner.yaml
 version: 1.0
-runtime: python
+runtime: python3
 build:
   commands:
     build:
+      - pip install --upgrade pip
       - pip install -r requirements.txt
       - pip install .
+  runtime-version: 3.9    # Move runtime-version here under build
+
 run:
-  runtime-version: 3.9
   command: python src/legatera/wsgi.py
   network:
     port: 5000
@@ -15,3 +18,5 @@ run:
       value: src.legatera.wsgi
     - name: FLASK_ENV
       value: production
+    - name: PYTHONPATH
+      value: src
