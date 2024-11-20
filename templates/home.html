@@ -1,113 +1,464 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legatera - Preserve Your Legacy</title>
+    <style>
+        :root {
+            --background: #FFF9F5;
+            --card: #FFFFFF;
+            --primary: #FF725E;
+            --primary-light: #FFE4E0;
+            --accent: #FFB196;
+            --text: #2D3748;
+            --text-secondary: #686F7D;
+            --neutral: #F7FAFC;
+            --border: #EDF2F7;
+        }
 
-{% block title %}Welcome{% endblock %}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-{% block content %}
-<div class="relative bg-white overflow-hidden">
-    <div class="max-w-7xl mx-auto">
-        <div class="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
-            <main class="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
-                <div class="sm:text-center lg:text-left">
-                    <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-                        <span class="block">Secure your legacy</span>
-                        <span class="block text-[#0A7075]">for your loved ones</span>
-                    </h1>
-                    <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                        Legatera helps you prepare and securely store important messages, documents, and wishes for your loved ones. Our platform ensures your legacy is preserved and shared according to your wishes.
-                    </p>
-                    <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-                        <div class="rounded-md shadow">
-                            <a href="{{ url_for('auth.register') }}"
-                               class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-[#0A7075] hover:bg-[#0C969C] md:py-4 md:text-lg md:px-10">
-                                Get Started
-                            </a>
-                        </div>
-                        <div class="mt-3 sm:mt-0 sm:ml-3">
-                            <a href="{{ url_for('auth.login') }}"
-                               class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-[#0A7075] bg-gray-100 hover:bg-gray-200 md:py-4 md:text-lg md:px-10">
-                                Sign In
-                            </a>
-                        </div>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.875rem 2.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            box-shadow: 0 2px 4px rgba(255, 114, 94, 0.2);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 114, 94, 0.3);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .header {
+            background-color: var(--card);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: -0.025em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .hero {
+            position: relative;
+            padding: 8rem 1rem;
+            text-align: center;
+            background-color: var(--neutral);
+            background-image: radial-gradient(circle at 50% 50%, var(--primary-light), transparent 70%);
+        }
+
+        .hero h1 {
+            font-size: 3.75rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            letter-spacing: -0.025em;
+        }
+
+        .hero p {
+            font-size: 1.375rem;
+            color: var(--text-secondary);
+            max-width: 42rem;
+            margin: 0 auto 2.5rem;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .features {
+            padding: 6rem 1rem;
+        }
+
+        .features h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 4rem;
+            letter-spacing: -0.025em;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background-color: var(--card);
+            padding: 2rem;
+            border-radius: 1rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
+        }
+
+        .pricing {
+            background-color: var(--neutral);
+            padding: 6rem 1rem;
+        }
+
+        .pricing h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 4rem;
+            letter-spacing: -0.025em;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .price-card {
+            background-color: var(--card);
+            border-radius: 1rem;
+            border: 1px solid var(--border);
+            position: relative;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .price-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
+        }
+
+        .price-card:hover .btn-outline {
+            background-color: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .price-card:hover .btn-primary {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 114, 94, 0.4);
+        }
+
+        .price-card.popular {
+            border: 2px solid var(--primary);
+        }
+
+        .price-card.popular:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 24px 48px rgba(255, 114, 94, 0.15);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-bottom-left-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .price-content {
+            padding: 2rem;
+        }
+
+        .price-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .price-card:hover .price-title {
+            color: var(--primary);
+        }
+
+        .price-amount {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        .price-period {
+            color: var(--text-secondary);
+            margin-left: 0.5rem;
+            font-size: 1.125rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            transition: transform 0.2s ease;
+        }
+
+        .price-card:hover .feature-list li {
+            transform: translateX(4px);
+        }
+
+        .feature-list li::before {
+            content: "✓";
+            color: var(--primary);
+            margin-right: 0.75rem;
+        }
+
+        .footer {
+            background-color: var(--card);
+            padding: 2rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.125rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container header-content">
+            <div class="logo">Legatera</div>
+            <nav class="nav-links">
+                <a href="#" class="btn btn-outline">Trustee Access</a>
+                <a href="#" class="btn btn-outline">Sign In</a>
+                <a href="#" class="btn btn-primary">Get Started</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Preserve Your Legacy</h1>
+            <p>Ensure your final messages and wishes reach your loved ones when they need them most.</p>
+            <div class="hero-buttons">
+                <a href="#" class="btn btn-primary">Get Started</a>
+                <a href="#" class="btn btn-outline">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Choose Your Trustees</h3>
+                    <p>Select trusted individuals to manage your legacy wishes with confidence and care</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Add Recipients</h3>
+                    <p>Designate loved ones who will receive your heartfelt messages and documents</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Last Wishes</h3>
+                    <p>Document your preferences and final requests in a clear, organized manner</p>
+                </div>
+                <div class="feature-card">
+                    <h3>List Assets</h3>
+                    <p>Securely catalog your important belongings and financial information</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Encrypted Vault</h3>
+                    <p>Store sensitive documents with bank-level security and peace of mind</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Personal Messages</h3>
+                    <p>Create meaningful, time-capsule messages for your loved ones</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing">
+        <div class="container">
+            <h2>Simple Pricing</h2>
+            <div class="pricing-grid">
+                <div class="price-card">
+                    <div class="price-content">
+                        <h3 class="price-title">Basic</h3>
+                        <div class="price-amount">Free</div>
+                        <ul class="feature-list">
+                            <li>1 Trustee</li>
+                            <li>5 Recipients</li>
+                            <li>Basic Last Wishes</li>
+                            <li>Asset Listing</li>
+                        </ul>
+                        <a href="#" class="btn btn-outline">Choose Plan</a>
                     </div>
                 </div>
-            </main>
-        </div>
-    </div>
-    
-    <!-- Features Section -->
-    <div class="py-12 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="lg:text-center">
-                <h2 class="text-base text-[#0A7075] font-semibold tracking-wide uppercase">Features</h2>
-                <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                    Everything you need to secure your legacy
-                </p>
-            </div>
 
-            <div class="mt-10">
-                <div class="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
-                    <!-- Secure Storage -->
-                    <div class="relative">
-                        <div class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-[#0A7075] text-white">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-                            </svg>
+                <div class="price-card popular">
+                    <div class="popular-badge">Most Popular</div>
+                    <div class="price-content">
+                        <h3 class="price-title">Standard</h3>
+                        <div class="price-amount">
+                            $19.99
+                            <span class="price-period">per year</span>
                         </div>
-                        <div class="ml-16">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900">Secure Storage</h3>
-                            <p class="mt-2 text-base text-gray-500">
-                                Your sensitive information is protected with enterprise-grade security using AWS services.
-                            </p>
-                        </div>
+                        <ul class="feature-list">
+                            <li>3 Trustees</li>
+                            <li>15 Recipients</li>
+                            <li>Detailed Last Wishes</li>
+                            <li>Asset Listing</li>
+                            <li>Document Vault</li>
+                            <li>Text Messages</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary">Choose Plan</a>
                     </div>
+                </div>
 
-                    <!-- Trusted Access -->
-                    <div class="relative">
-                        <div class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-[#0A7075] text-white">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-                            </svg>
+                <div class="price-card">
+                    <div class="price-content">
+                        <h3 class="price-title">Premium</h3>
+                        <div class="price-amount">
+                            $39.99
+                            <span class="price-period">per year</span>
                         </div>
-                        <div class="ml-16">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900">Trusted Access</h3>
-                            <p class="mt-2 text-base text-gray-500">
-                                Designate trusted individuals to access your information when the time comes.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Digital Legacy -->
-                    <div class="relative">
-                        <div class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-[#0A7075] text-white">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                            </svg>
-                        </div>
-                        <div class="ml-16">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900">Digital Legacy</h3>
-                            <p class="mt-2 text-base text-gray-500">
-                                Store important documents, messages, and wishes for your loved ones.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Time-Based Release -->
-                    <div class="relative">
-                        <div class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-[#0A7075] text-white">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                        </div>
-                        <div class="ml-16">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900">Time-Based Release</h3>
-                            <p class="mt-2 text-base text-gray-500">
-                                Set specific timing for when your messages and documents should be shared.
-                            </p>
-                        </div>
+                        <ul class="feature-list">
+                            <li>5 Trustees</li>
+                            <li>Unlimited Recipients</li>
+                            <li>Comprehensive Last Wishes</li>
+                            <li>Asset Listing</li>
+                            <li>Document Vault</li>
+                            <li>Video Messages</li>
+                            <li>Digital Memorial</li>
+                        </ul>
+                        <a href="#" class="btn btn-outline">Choose Plan</a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-{% endblock %}
+    </section>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="logo">Legatera</div>
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Contact</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

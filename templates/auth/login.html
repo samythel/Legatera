@@ -1,76 +1,51 @@
 {% extends "base.html" %}
 
-{% block title %}Sign In{% endblock %}
+{% block title %}Login - Legatera{% endblock %}
 
 {% block content %}
-<div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8">
-        <div>
-            <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                Sign in to your account
-            </h2>
-            <p class="mt-2 text-center text-sm text-gray-600">
-                Or
-                <a href="{{ url_for('auth.register') }}" class="font-medium text-[#0A7075] hover:text-[#0C969C]">
-                    create a new account
-                </a>
-            </p>
+<div class="auth-container" style="max-width: 400px; margin: 4rem auto; padding: 2rem; background-color: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 1px solid var(--neutral-medium);">
+    <h1 style="color: var(--primary-dark); text-align: center; margin-bottom: 2rem;">Login</h1>
+    
+    <form method="POST" action="{{ url_for('login') }}" style="display: flex; flex-direction: column; gap: 1rem;">
+        {{ form.hidden_tag() }}
+        
+        <div class="form-group">
+            {{ form.email.label(class="form-label", style="color: var(--primary-dark); display: block; margin-bottom: 0.5rem;") }}
+            {{ form.email(class="form-control", style="width: 100%; padding: 0.5rem; border: 1px solid var(--neutral-medium); border-radius: 4px;") }}
+            {% if form.email.errors %}
+                {% for error in form.email.errors %}
+                    <span style="color: #dc3545; font-size: 0.875rem;">{{ error }}</span>
+                {% endfor %}
+            {% endif %}
         </div>
-        <form class="mt-8 space-y-6" method="POST" action="">
-            {{ form.hidden_tag() }}
-            <div class="rounded-md shadow-sm -space-y-px">
-                <div>
-                    {{ form.email.label(class="sr-only") }}
-                    {{ form.email(class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-[#0A7075] focus:border-[#0A7075] focus:z-10 sm:text-sm", placeholder="Email address") }}
-                    {% if form.email.errors %}
-                        {% for error in form.email.errors %}
-                            <p class="text-red-500 text-xs mt-1">{{ error }}</p>
-                        {% endfor %}
-                    {% endif %}
-                </div>
-                <div>
-                    {{ form.password.label(class="sr-only") }}
-                    {{ form.password(class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-[#0A7075] focus:border-[#0A7075] focus:z-10 sm:text-sm", placeholder="Password") }}
-                    {% if form.password.errors %}
-                        {% for error in form.password.errors %}
-                            <p class="text-red-500 text-xs mt-1">{{ error }}</p>
-                        {% endfor %}
-                    {% endif %}
-                </div>
-            </div>
 
-            <div class="flex items-center justify-between">
-                <div class="text-sm">
-                    <a href="#" class="font-medium text-[#0A7075] hover:text-[#0C969C]">
-                        Forgot your password?
-                    </a>
-                </div>
-            </div>
-
-            <div>
-                {{ form.submit(class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#0A7075] hover:bg-[#0C969C] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0A7075]") }}
-            </div>
-        </form>
-
-        <div class="mt-6">
-            <div class="relative">
-                <div class="absolute inset-0 flex items-center">
-                    <div class="w-full border-t border-gray-300"></div>
-                </div>
-                <div class="relative flex justify-center text-sm">
-                    <span class="px-2 bg-white text-gray-500">
-                        Are you a trustee?
-                    </span>
-                </div>
-            </div>
-
-            <div class="mt-6">
-                <a href="{{ url_for('auth.trustee_login') }}"
-                   class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-[#0A7075] bg-gray-50 hover:bg-gray-100">
-                    Sign in as Trustee
-                </a>
-            </div>
+        <div class="form-group">
+            {{ form.password.label(class="form-label", style="color: var(--primary-dark); display: block; margin-bottom: 0.5rem;") }}
+            {{ form.password(class="form-control", style="width: 100%; padding: 0.5rem; border: 1px solid var(--neutral-medium); border-radius: 4px;") }}
+            {% if form.password.errors %}
+                {% for error in form.password.errors %}
+                    <span style="color: #dc3545; font-size: 0.875rem;">{{ error }}</span>
+                {% endfor %}
+            {% endif %}
         </div>
+
+        <div class="form-group" style="display: flex; align-items: center;">
+            {{ form.remember(style="margin-right: 0.5rem;") }}
+            {{ form.remember.label(style="color: var(--primary-medium);") }}
+        </div>
+
+        <button type="submit" class="btn" style="background-color: var(--primary-dark); color: var(--neutral-lightest); width: 100%; padding: 0.75rem; border: none; border-radius: 4px; cursor: pointer; margin-top: 1rem;">
+            Login
+        </button>
+    </form>
+
+    <div style="text-align: center; margin-top: 2rem;">
+        <p style="color: var(--primary-medium);">Don't have an account? 
+            <a href="{{ url_for('register') }}" style="color: var(--primary-dark); text-decoration: none;">Register here</a>
+        </p>
+        <p style="color: var(--primary-medium);">
+            <a href="{{ url_for('reset_password_request') }}" style="color: var(--primary-dark); text-decoration: none;">Forgot your password?</a>
+        </p>
     </div>
 </div>
 {% endblock %}

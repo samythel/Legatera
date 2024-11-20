@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}Legatera - Preserve Your Legacy{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="container">
+        <h1>Preserve Your Legacy</h1>
+        <p>Ensure your final messages and wishes reach your loved ones when they need them most.</p>
+        <div class="hero-buttons">
+            <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Get Started</a>
+            <a href="#features" class="btn btn-outline">Learn More</a>
+        </div>
+    </div>
+</section>
+
+<section id="features" class="features">
+    <div class="container">
+        <h2>How It Works</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>Choose Your Trustees</h3>
+                <p>Select trusted individuals to manage your legacy wishes with confidence and care</p>
+            </div>
+            <div class="feature-card">
+                <h3>Add Recipients</h3>
+                <p>Designate loved ones who will receive your heartfelt messages and documents</p>
+            </div>
+            <div class="feature-card">
+                <h3>Last Wishes</h3>
+                <p>Document your preferences and final requests in a clear, organized manner</p>
+            </div>
+            <div class="feature-card">
+                <h3>List Assets</h3>
+                <p>Securely catalog your important belongings and financial information</p>
+            </div>
+            <div class="feature-card">
+                <h3>Encrypted Vault</h3>
+                <p>Store sensitive documents with bank-level security and peace of mind</p>
+            </div>
+            <div class="feature-card">
+                <h3>Personal Messages</h3>
+                <p>Create meaningful, time-capsule messages for your loved ones</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="pricing">
+    <div class="container">
+        <h2>Simple Pricing</h2>
+        <div class="pricing-grid">
+            <div class="price-card">
+                <div class="price-content">
+                    <h3 class="price-title">Basic</h3>
+                    <div class="price-amount">Free</div>
+                    <ul class="feature-list">
+                        <li>1 Trustee</li>
+                        <li>5 Recipients</li>
+                        <li>Basic Last Wishes</li>
+                        <li>Asset Listing</li>
+                    </ul>
+                    <a href="{{ url_for('auth.register') }}" class="btn btn-outline">Choose Plan</a>
+                </div>
+            </div>
+
+            <div class="price-card popular">
+                <div class="popular-badge">Most Popular</div>
+                <div class="price-content">
+                    <h3 class="price-title">Standard</h3>
+                    <div class="price-amount">
+                        $19.99
+                        <span class="price-period">per year</span>
+                    </div>
+                    <ul class="feature-list">
+                        <li>3 Trustees</li>
+                        <li>15 Recipients</li>
+                        <li>Detailed Last Wishes</li>
+                        <li>Asset Listing</li>
+                        <li>Document Vault</li>
+                        <li>Text Messages</li>
+                    </ul>
+                    <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Choose Plan</a>
+                </div>
+            </div>
+
+            <div class="price-card">
+                <div class="price-content">
+                    <h3 class="price-title">Premium</h3>
+                    <div class="price-amount">
+                        $39.99
+                        <span class="price-period">per year</span>
+                    </div>
+                    <ul class="feature-list">
+                        <li>5 Trustees</li>
+                        <li>Unlimited Recipients</li>
+                        <li>Comprehensive Last Wishes</li>
+                        <li>Asset Listing</li>
+                        <li>Document Vault</li>
+                        <li>Video Messages</li>
+                        <li>Digital Memorial</li>
+                    </ul>
+                    <a href="{{ url_for('auth.register') }}" class="btn btn-outline">Choose Plan</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
