@@ -13,7 +13,7 @@ build:
       value: "production"
 
 run:
-  runtime-version: 3.9
+  runtime-version: 3.11
   command: python -m gunicorn --bind 0.0.0.0:8080 --workers 4 --timeout 0 "app:app"
   network:
     port: 8080
