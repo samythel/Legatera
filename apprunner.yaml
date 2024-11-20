@@ -1,13 +1,13 @@
 # apprunner.yaml
 version: 1.0
 runtime: python3
+runtime-version: 3.9
 build:
   commands:
     build:
       - pip install --upgrade pip
       - pip install -r requirements.txt
       - pip install .
-  runtime-version: 3.9    # Move runtime-version here under build
 
 run:
   command: python src/legatera/wsgi.py
