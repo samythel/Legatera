@@ -19,7 +19,7 @@ build:
       value: production
 
 run:
-  runtime-version: 3.11.0
+  runtime-version: 3.11
   command: gunicorn --workers=4 --threads=2 --timeout=120 --bind=0.0.0.0:8080 --access-logfile=- --error-logfile=- src.legatera.wsgi:app
   network:
     port: 8080
