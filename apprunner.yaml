@@ -2,15 +2,9 @@ version: 1.0
 runtime: python3
 build:
   commands:
-    pre-build:
-      - yum update -y
-      - yum groupinstall -y "Development Tools"
-      - yum install -y python3-devel openssl-devel
-      - alternatives --set python3 /usr/bin/python3.9 || true
     build:
-      - pip3 install --upgrade pip
-      - pip3 install pipenv
-      - pipenv install --system --deploy
+      - pip install --upgrade pip
+      - pip install -r requirements.txt
 run:
   command: gunicorn --bind 0.0.0.0:5002 --workers 4 --timeout 0 "app:app"
   network:
@@ -18,7 +12,5 @@ run:
   env:
     - name: FLASK_ENV
       value: production
-    - name: PYTHONPATH
-      value: .
     - name: PORT
       value: "5002"
