@@ -1,7 +1,6 @@
 # apprunner.yaml
 version: 1.0
-runtime: python3
-runtime-version: 3.9
+runtime: python3.9
 build:
   commands:
     build:
