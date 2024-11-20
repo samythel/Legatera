@@ -31,8 +31,3 @@ run:
       value: production
     - name: PYTHONPATH
       value: src
-  secrets:
-    - name: AWS_SECRET_ACCESS_KEY
-      value-from: arn:aws:secretsmanager:region:account-id:secret:secret-name:AWS_SECRET_ACCESS_KEY::
-    - name: AWS_ACCESS_KEY_ID
-      value-from: arn:aws:secretsmanager:region:account-id:secret:secret-name:AWS_ACCESS_KEY_ID::
