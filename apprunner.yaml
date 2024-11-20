@@ -2,10 +2,8 @@ version: 1.0
 runtime: python311
 build:
   commands:
-    pre-build:
-      - python -m pip install --upgrade pip
     build:
-      - python -m pip install -r requirements.txt
+      - pip3 install -r requirements.txt
   env:
     - name: PORT
       value: "8080"
@@ -14,7 +12,7 @@ build:
 
 run:
   runtime-version: 3.11.10
-  command: python -m gunicorn --bind 0.0.0.0:8080 --workers 4 --timeout 0 "app:app"
+  command: python3 -m gunicorn --bind 0.0.0.0:8080 --workers 4 --timeout 0 "app:app"
   network:
     port: 8080
   env:
